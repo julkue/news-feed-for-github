@@ -1,0 +1,30 @@
+{
+  "name": "news-feed-for-github",
+  "version": "0.1.0",
+  "description": "GitHub news feed notifications directly in the browser",
+  "authors": [
+    {
+      "name": "Julian Motz",
+      "homepage": "http://github.com/julmot"
+    }
+  ],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/julmot/news-feed-for-github.git"
+  },
+  "homepage": "https://github.com/julmot/news-feed-for-github",
+  "keywords": [
+    "github",
+    "news",
+    "feed",
+    "newsfeed",
+    "notifications",
+    "browser",
+    "extension"
+  ],
+  "dependencies": {
+    "xmlToJSON.js": "^1.3.2"
+  },
+  "devDependencies": {}
+}

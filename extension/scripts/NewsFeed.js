@@ -1,0 +1,99 @@
+/******************************************************
+ * GitHub news feed
+ * Copyright (c) 2016, Julian Motz
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed
+ * with this source code.
+ *****************************************************/
+"use strict";
+class NewsFeed {
+
+    constructor() {
+        this.ghURL = "https://github.com";
+    }
+
+    xhr(options) {
+        let xmlhttp = new XMLHttpRequest();
+        let url = options["url"];
+        if(typeof options["cache"] !== "boolean" || options["cache"]) {
+            let divider = "&";
+            if(url.indexOf("?") === -1) {
+                divider = "?";
+            }
+            url = url + divider + (new Date().getTime());
+        }
+        if(typeof options["responseType"] === "string") {
+            xmlhttp.responseType = options["responseType"];
+        }
+        xmlhttp.withCredentials = true;
+        xmlhttp.onreadystatechange = () => {
+            if(xmlhttp.readyState === XMLHttpRequest.DONE) {
+                if(xmlhttp.status === 200) {
+                    if(typeof options["success"] === "function") {
+                        options["success"](xmlhttp.responseText);
+                    }
+                } else {
+                    if(typeof options["error"] === "function") {
+                        options["error"](xmlhttp.statusText);
+                    }
+                }
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    };
+
+    getURL(successFn, errorFn) {
+        if(sessionStorage.getItem("url")) {
+            successFn(sessionStorage.getItem("url"));
+            return;
+        }
+        this.xhr({
+            "url": this.ghURL,
+            "success": (data) => {
+                try {
+                    let tmp = document.createElement('div');
+                    tmp.innerHTML = unescape(data);
+                    var rss = tmp.querySelector(".subscribe-feed");
+                    rss = rss.getAttribute("href");
+                    if(rss === null || rss === "") {
+                        throw new Error("err");
+                    }
+                } catch(e) {
+                    errorFn("Log in to GitHub to receive news feed notifications!");
+                    return;
+                }
+                sessionStorage.setItem("url", this.ghURL + rss);
+                successFn(sessionStorage.getItem("url"));
+            },
+            "error": (errorThrown) => {
+                errorFn(`Unable to request GitHub`);
+            }
+        });
+    };
+
+    load(successFn, errorFn) {
+        this.getURL((url) => {
+            this.xhr({
+                url,
+                "responseType": "text",
+                "success": (data) => {
+                    try {
+                        var json = xmlToJSON.parseString(data, {
+                            "xmlns": false
+                        });
+                    } catch(e) {
+                        errorFn(`Unable to parse news feed. ${e.message}`);
+                    }
+                    successFn(json);
+                },
+                "error": (errorThrown) => {
+                    errorFn(`Unable to retrieve GitHub news feed. ${errorThrown}`);
+                }
+            });
+        }, (errorThrown) => {
+            errorFn(errorThrown);
+        });
+    };
+
+}

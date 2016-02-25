@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+  "name": "News Feed for GitHub",
+  "description": "GitHub news feed notifications directly in the browser",
+  "version": "0.1.0",
+  "homepage_url": "https://github.com/julmot/news-feed-for-github",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "applications": {
+    "gecko": {
+      "id": "{90973394-D193-11E5-A96D-6AD3BB8E7F8B}",
+      "strict_min_version": "45.*"
+    }
+  },
+  "browser_action": {
+    "default_icon": {
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    },
+    "default_title": "News Feed for GitHub"
+  },
+  "permissions": [
+    "<all_urls>",
+    "notifications",
+    "tabs"
+  ],
+  "background": {
+    "scripts": [
+      "vendor/xmlToJSON.js/lib/xmlToJSON.js",
+      "scripts/NewsFeed.js",
+      "scripts/NewsFeedChecker.js",
+      "scripts/NewsFeedTransmitter.js",
+      "scripts/bootstrap.js"
+    ]
+  }
+}
