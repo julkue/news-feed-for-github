@@ -34,6 +34,10 @@ class NewsFeedTransmitter {
     }
 
     notifyError(err) {
+        if(sessionStorage.getItem("previousError") === err){
+            return;
+        }
+        sessionStorage.setItem("previousError", err);
         console.error(err);
         if(typeof chrome === "object" && typeof chrome.notifications === "object") {
             chrome.notifications.create({
