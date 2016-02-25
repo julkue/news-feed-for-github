@@ -26,7 +26,7 @@ class NewsFeedTransmitter {
         if(typeof chrome === "object" && typeof chrome.notifications === "object") {
             chrome.notifications.create({
                 "type": "basic",
-                "iconUrl": chrome.extension.getURL("icons/icon-48.png"),
+                "iconUrl": chrome.extension.getURL("icons/icon-96.png"),
                 "title": "GitHub news feed",
                 "message": message
             });
@@ -42,7 +42,7 @@ class NewsFeedTransmitter {
         if(typeof chrome === "object" && typeof chrome.notifications === "object") {
             chrome.notifications.create({
                 "type": "basic",
-                "iconUrl": chrome.extension.getURL("icons/icon-48.png"),
+                "iconUrl": chrome.extension.getURL("icons/icon-96.png"),
                 "title": "GitHub news feed",
                 "message": err
             });
