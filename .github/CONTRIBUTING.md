@@ -23,11 +23,12 @@ Please provide the following information's:
 
 ###2.1 General
 
-Contributions are very very much appreciated. To get started, clone this
+Contributions are very much appreciated. To get started, clone this
 repository and run `$ npm install` as well as `$ bower install`.
 
-To test your changes, run `$ grunt dist`. This will generate a package to `.dist/`
-which you can install directly with dragging it into your browser.
+To test your changes, run `$ grunt dist`. This will generate a `.xpi` package for
+Firefox and a `.zip` for Chrome to `.dist/`. You can pass `--chrome=true` or
+`--firefox=true` to just generate one of them.
 
 ###2.2 Pull Requests
 

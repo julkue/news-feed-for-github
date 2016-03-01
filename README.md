@@ -15,5 +15,5 @@ Firefox:
 
 [installation]: https://github.com/julmot/news-feed-for-github#installation
 [firefox-download-link]: https://addons.mozilla.org/en-US/firefox/addon/news-feed-for-github/
-[chrome-download-link]: https://addons.mozilla.org/en-US/firefox/addon/news-feed-for-github/
+[chrome-download-link]: https://chrome.google.com/webstore/detail/news-feed-for-github/gbpajmknkcgjeinfbmfeiafhogbhgkjh
 [release-link]: https://github.com/julmot/news-feed-for-github/releases "Releases"
