@@ -25,7 +25,7 @@
     "default_title": "News Feed for GitHub"
   },
   "permissions": [
-    "<all_urls>",
+    "https://*.github.com/*",
     "notifications",
     "tabs"
   ],
