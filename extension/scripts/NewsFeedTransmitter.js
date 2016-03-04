@@ -1,5 +1,5 @@
 /******************************************************
- * GitHub news feed
+ * News Feed for GitHub
  * Copyright (c) 2016, Julian Motz
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed
@@ -46,7 +46,9 @@ class NewsFeedTransmitter extends NewsFeedChecker {
                     chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
                         if(notifId === notifyPostID) {
                             if(btnIdx === 0) {
-                                window.open(authorURL);
+                                chrome.tabs.create({
+                                    "url": authorURL
+                                });
                             }
                         }
                     });
