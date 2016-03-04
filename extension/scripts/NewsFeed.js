@@ -15,7 +15,7 @@ class NewsFeed {
     xhr(options) {
         let xmlhttp = new XMLHttpRequest();
         let url = options["url"];
-        if(typeof options["cache"] !== "boolean" || options["cache"]) {
+        if(typeof options["cache"] !== "boolean" || !options["cache"]) {
             let divider = "&";
             if(url.indexOf("?") === -1) {
                 divider = "?";
@@ -25,12 +25,21 @@ class NewsFeed {
         if(typeof options["responseType"] === "string") {
             xmlhttp.responseType = options["responseType"];
         }
+        if(typeof options["withCredentials"] !== "boolean" || options["withCredentials"]) {
+            xmlhttp.withCredentials = true;
+        } else {
+            xmlhttp.withCredentials = false;
+        }
         xmlhttp.withCredentials = true;
         xmlhttp.onreadystatechange = () => {
             if(xmlhttp.readyState === XMLHttpRequest.DONE) {
                 if(xmlhttp.status === 200) {
                     if(typeof options["success"] === "function") {
-                        options["success"](xmlhttp.responseText);
+                        if(options["responseType"] === "blob") {
+                            options["success"](xmlhttp.response);
+                        } else {
+                            options["success"](xmlhttp.responseText);
+                        }
                     }
                 } else {
                     if(typeof options["error"] === "function") {

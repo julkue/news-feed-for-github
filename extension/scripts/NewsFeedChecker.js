@@ -8,17 +8,15 @@
 "use strict";
 class NewsFeedChecker extends NewsFeed {
 
-    constructor(cbnp, cbe) {
+    constructor() {
         super();
+    }
 
+    initialize(cbnp, cbe) {
         this.interval = 15000;
         this.cbNewPost = cbnp;
         this.cbErr = cbe;
 
-        this.initialize();
-    }
-
-    initialize() {
         setInterval(() => {
             this.fetch();
         }, this.interval);

@@ -10,7 +10,7 @@ Firefox:
 ## Installation
 
 - [Firefox add-ons marketplace][firefox-download-link]
-- [Chrome add-ons marketplace][chrome-download-link]
+- [Chrome web store][chrome-download-link]
 - Download a release [directly][release-link]
 
 [installation]: https://github.com/julmot/news-feed-for-github#installation
