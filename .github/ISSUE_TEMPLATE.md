@@ -1,5 +1,3 @@
-### Subject of the issue
-
 Description
 
 ### Expected behavior
