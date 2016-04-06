@@ -59,7 +59,7 @@ class NewsFeed {
         }
         this.xhr({
             "url": this.ghURL,
-            "success": (data) => {
+            "success": data => {
                 try {
                     let tmp = document.createElement('div');
                     tmp.innerHTML = unescape(data);
@@ -75,8 +75,8 @@ class NewsFeed {
                 sessionStorage.setItem("url", this.ghURL + rss);
                 successFn(sessionStorage.getItem("url"));
             },
-            "error": (errorThrown) => {
-                errorFn(`Unable to request GitHub`);
+            "error": errorThrown => {
+                errorFn("Unable to load GitHub news feed URL", errorThrown);
             }
         });
     };
@@ -86,23 +86,21 @@ class NewsFeed {
             this.xhr({
                 url,
                 "responseType": "text",
-                "success": (data) => {
+                "success": data => {
                     try {
                         var json = xmlToJSON.parseString(data, {
                             "xmlns": false
                         });
                     } catch(e) {
-                        errorFn(`Unable to parse news feed. ${e.message}`);
+                        errorFn("Unable to parse news feed");
                     }
                     successFn(json);
                 },
-                "error": (errorThrown) => {
-                    errorFn(`Unable to retrieve GitHub news feed. ${errorThrown}`);
+                "error": errorThrown => {
+                    errorFn("Unable to load GitHub news feed", errorThrown);
                 }
             });
-        }, (errorThrown) => {
-            errorFn(errorThrown);
-        });
+        }, errorFn);
     };
 
 }

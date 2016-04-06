@@ -24,18 +24,20 @@ class NewsFeedChecker extends NewsFeed {
     }
 
     fetch() {
-        this.load((data) => {
-            this.checkNewPosts(data);
-        }, (error) => {
-            this.cbErr(error);
-        });
+        this.load(
+            this.checkNewPosts.bind(this),
+            this.cbErr.bind(this)
+        );
     }
 
     checkNewPosts(j) {
         let nf = j["feed"][0]["entry"];
         let nfStr = JSON.stringify(nf);
         let savedNfStr = sessionStorage.getItem("newsFeed");
-        let savedNf = JSON.parse(savedNfStr);
+        let savedNf = {};
+        if(savedNfStr) {
+            savedNf = JSON.parse(savedNfStr);
+        }
 
         if(savedNfStr && savedNfStr !== nfStr) {
             let showStack = [];

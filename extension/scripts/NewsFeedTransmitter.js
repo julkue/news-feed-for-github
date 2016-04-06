@@ -27,7 +27,7 @@ class NewsFeedTransmitter extends NewsFeedChecker {
             "cache": true,
             "url": authorImage,
             "responseType": "blob",
-            "success": (blob) => {
+            "success": blob => {
                 let blobURL = window.URL.createObjectURL(blob);
                 if(typeof chrome === "object" && typeof chrome.notifications === "object") {
                     // as FF does not support the callback function
@@ -46,32 +46,44 @@ class NewsFeedTransmitter extends NewsFeedChecker {
                     chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
                         if(notifId === notifyPostID) {
                             if(btnIdx === 0) {
-                                chrome.tabs.create({
-                                    "url": authorURL
+                                chrome.tabs.query({
+                                    "currentWindow": true,
+                                    "active": true
+                                }, tabs => {
+                                    const index = ++tabs[0].index;
+                                    chrome.tabs.create({
+                                        "url": authorURL,
+                                        "active": true,
+                                        "index": index
+                                    });
                                 });
                             }
                         }
                     });
                 }
             },
-            "error": (err) => {
+            "error": err => {
                 this.notifyError(err);
             }
         });
     }
 
-    notifyError(err) {
-        if(sessionStorage.getItem("previousError") === err) {
+    notifyError(error, errorDetail) {
+        let errMsg = error;
+        if(typeof errorDetail === "string" && errorDetail !== "") {
+            errMsg = `${errMsg}: ${errorDetail}`;
+        }
+        if(sessionStorage.getItem("previousError") === error) {
             return;
         }
-        sessionStorage.setItem("previousError", err);
-        console.error(err);
+        sessionStorage.setItem("previousError", error);
+        console.error(error, errorDetail);
         if(typeof chrome === "object" && typeof chrome.notifications === "object") {
             chrome.notifications.create({
                 "type": "basic",
                 "iconUrl": chrome.extension.getURL("icons/icon-80.png"),
                 "title": "GitHub news feed",
-                "message": err
+                "message": errMsg
             });
         }
     }

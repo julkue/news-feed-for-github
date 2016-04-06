@@ -14,8 +14,29 @@ let instance = new NewsFeedTransmitter();
 // Initialize icon click action
 if(typeof chrome === "object" && typeof chrome.browserAction === "object") {
     chrome.browserAction.onClicked.addListener(() => {
-        chrome.tabs.create({
-            "url": instance.ghURL
+        chrome.tabs.query({
+            "currentWindow": true
+        }, tabs => {
+            let opened = -1;
+            let index = 0;
+            for(let tab of tabs) {
+                if(tab.url.startsWith(instance.ghURL)) {
+                    opened = tab.id;
+                } else if(tab.active) {
+                    index = ++tab.index;
+                }
+            }
+            if(opened === -1) {
+                chrome.tabs.create({
+                    "url": instance.ghURL,
+                    "active": true,
+                    "index": index
+                });
+            } else {
+                chrome.tabs.update(opened, {
+                    "active": true
+                });
+            }
         });
     });
 }
