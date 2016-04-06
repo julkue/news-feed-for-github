@@ -23,7 +23,7 @@
     "url": "https://github.com/julmot/news-feed-for-github/issues"
   },
   "devDependencies": {
-    "grunt": "~0.4",
+    "grunt": "~1",
     "grunt-contrib-clean": "~1",
     "grunt-contrib-compress": "~1",
     "grunt-contrib-copy": "~1",
