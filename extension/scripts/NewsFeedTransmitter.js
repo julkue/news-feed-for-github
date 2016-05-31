@@ -17,7 +17,7 @@ class NewsFeedTransmitter extends NewsFeedChecker {
     }
 
     notifyPost(post) {
-        console.debug(post);
+        console.debug("GitHub news feed", post);
         let message = post["title"][0]["_text"];
         let authorImage = post["thumbnail"][0]["_attr"]["url"]["_value"];
         let authorURL = post["author"][0]["uri"][0]["_text"];
@@ -28,38 +28,51 @@ class NewsFeedTransmitter extends NewsFeedChecker {
             "url": authorImage,
             "responseType": "blob",
             "success": blob => {
-                let blobURL = window.URL.createObjectURL(blob);
-                if(typeof chrome === "object" && typeof chrome.notifications === "object") {
+                const blobURL = window.URL.createObjectURL(blob),
                     // as FF does not support the callback function
                     // it is necessary to generate the id manually
-                    let notifyPostID = (0.5).toString(36).substr(2, 16);
-                    chrome.notifications.create(notifyPostID, {
-                        "type": "basic",
-                        "iconUrl": chrome.extension.getURL("icons/icon-80.png"),
-                        "title": "GitHub news feed",
-                        "message": message,
-                        "buttons": [{
+                    notifyPostID = Math.random().toString(36).slice(2);
+                let notificationOptions = {
+                    "type": "basic",
+                    "iconUrl": chrome.extension.getURL("icons/icon-80.png"),
+                    "title": "GitHub news feed",
+                    "message": message
+                };
+                // FF does not support the buttons property
+                // http://tinyurl.com/jxjgg5o
+                if(environment === "chrome") {
+                    notificationOptions["buttons"] = [
+                        {
                             "title": `View ${author}`,
                             "iconUrl": blobURL
-                        }]
-                    });
-                    chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
-                        if(notifId === notifyPostID) {
-                            if(btnIdx === 0) {
+                        }
+                    ];
+                }
+                chrome.notifications.create(
+                    notifyPostID,
+                    notificationOptions
+                );
+                // FF does not support the button events for notifications
+                if(environment === "chrome") {
+                    chrome.notifications.onButtonClicked.addListener(
+                        (notifId, btnIdx) => {
+                            if(notifId === notifyPostID && btnIdx === 0) {
                                 chrome.tabs.query({
                                     "currentWindow": true,
                                     "active": true
                                 }, tabs => {
-                                    const index = ++tabs[0].index;
-                                    chrome.tabs.create({
+                                    let opts = {
                                         "url": authorURL,
                                         "active": true,
-                                        "index": index
-                                    });
+                                    };
+                                    if(tabs.length) {
+                                        opts["index"] = tabs[0].index + 1;
+                                    }
+                                    chrome.tabs.create(opts);
                                 });
                             }
                         }
-                    });
+                    );
                 }
             },
             "error": err => {
@@ -78,14 +91,12 @@ class NewsFeedTransmitter extends NewsFeedChecker {
         }
         sessionStorage.setItem("previousError", error);
         console.error(error, errorDetail);
-        if(typeof chrome === "object" && typeof chrome.notifications === "object") {
-            chrome.notifications.create({
-                "type": "basic",
-                "iconUrl": chrome.extension.getURL("icons/icon-80.png"),
-                "title": "GitHub news feed",
-                "message": errMsg
-            });
-        }
+        chrome.notifications.create({
+            "type": "basic",
+            "iconUrl": chrome.extension.getURL("icons/icon-80.png"),
+            "title": "GitHub news feed",
+            "message": errMsg
+        });
     }
 
 }

@@ -13,7 +13,7 @@ module.exports = function (grunt) {
             build: ['build/**']
         },
         copy: {
-            'chrome': {
+            chrome: {
                 files: [
                     {
                         cwd: 'extension/',
@@ -22,6 +22,18 @@ module.exports = function (grunt) {
                         expand: true,
                         mode: true,
                         dest: 'build/chrome'
+                    }
+                ]
+            },
+            firefox: {
+                files: [
+                    {
+                        cwd: 'extension/',
+                        src: ['**/*', ],
+                        timestamp: true,
+                        expand: true,
+                        mode: true,
+                        dest: 'build/firefox'
                     }
                 ]
             },
@@ -55,7 +67,7 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'extension/',
+                        cwd: 'build/firefox/',
                         src: ['**/*', '!test.html'],
                         dest: '/'
                     }
@@ -64,12 +76,30 @@ module.exports = function (grunt) {
         },
         replace: {
             chrome: {
-                src: ['build/chrome/manifest.json'],
-                dest: 'build/chrome/manifest.json',
-                replacements: [{
-                    from: /,?[\s]*"applications":\s?{[^}]*}[^}]*}[^}]*}/gmi,
-                    to: ''
-                }]
+                src: [
+                    'build/chrome/manifest.json',
+                    'build/chrome/scripts/bootstrap.js'
+                ],
+                overwrite: true,
+                replacements: [
+                    {
+                        from: /,?[\s]*"applications":\s?{[^}]*}[^}]*}[^}]*}/gmi,
+                        to: ''
+                    }, {
+                        from: /([A-Za-z]*\s?environment\s?=\s?\")[A-Za-z0-9]*(\";)/gmi,
+                        to: '$1chrome$2'
+                    }
+                ]
+            },
+            firefox: {
+                src: ['build/firefox/scripts/bootstrap.js'],
+                overwrite: true,
+                replacements: [
+                    {
+                        from: /([A-Za-z]*\s?environment\s?=\s?\")[A-Za-z0-9]*(\";)/gmi,
+                        to: '$1firefox$2'
+                    }
+                ]
             }
         }
     });
@@ -93,7 +123,11 @@ module.exports = function (grunt) {
             ]);
         }
         if((!grunt.option('chrome') && !grunt.option('firefox')) || grunt.option('firefox')) {
-            grunt.task.run(['compress:firefox']);
+            grunt.task.run([
+                'copy:firefox',
+                'replace:firefox',
+                'compress:firefox'
+            ]);
         }
         grunt.task.run(['clean:build']);
     });

@@ -7,6 +7,10 @@
  *****************************************************/
 "use strict";
 
+// Specify environment, either "firefox" or "chrome" as some features are
+// limited. Is replaced in the build for the respective target.
+const environment = "chrome";
+
 // Initialize notifications
 sessionStorage.clear(); // just necessary while developing
 let instance = new NewsFeedTransmitter();
