@@ -63,7 +63,7 @@ class NewsFeed {
                 try {
                     let tmp = document.createElement('div');
                     tmp.innerHTML = unescape(data);
-                    var rss = tmp.querySelector(".subscribe-feed");
+                    var rss = tmp.querySelector("a.link-gray-dark");
                     rss = rss.getAttribute("href");
                     if(rss === null || rss === "") {
                         throw new Error("err");
