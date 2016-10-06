@@ -74,6 +74,14 @@ module.exports = function (grunt) {
                 ]
             }
         },
+        removelogging: {
+            chrome: {
+                src: 'build/chrome/scripts/**/*.js'
+            },
+            firefox: {
+                src: 'build/firefox/scripts/**/*.js'
+            }
+        },
         replace: {
             chrome: {
                 src: [
@@ -118,6 +126,7 @@ module.exports = function (grunt) {
         if((!grunt.option('chrome') && !grunt.option('firefox')) || grunt.option('chrome')) {
             grunt.task.run([
                 'copy:chrome',
+                'removelogging:chrome',
                 'replace:chrome',
                 'compress:chrome'
             ]);
@@ -125,6 +134,7 @@ module.exports = function (grunt) {
         if((!grunt.option('chrome') && !grunt.option('firefox')) || grunt.option('firefox')) {
             grunt.task.run([
                 'copy:firefox',
+                'removelogging:firefox',
                 'replace:firefox',
                 'compress:firefox'
             ]);
