@@ -36,5 +36,11 @@ Make sure that your Pull Requests follow the [code convention][code-convention].
 If you are using Atom with Atom Beautify you can enter `STRG + Alt + b` to format
 the source code to follow the convention.
 
+### 2.3 Contribution and License Agreement
+
+If you contribute to this project, you are implicitly allowing your code to be
+distributed under [this license][license]. You are also implicitly verifying
+that all code is your original work.
 
 [code-convention]: https://github.com/julmot/news-feed-for-github/blob/master/.jsbeautifyrc
+[license]: https://git.io/vM5kZ

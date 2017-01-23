@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "News Feed for GitHub",
   "description": "GitHub news feed notifications directly in the browser",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "homepage_url": "https://github.com/julmot/news-feed-for-github",
   "icons": {
     "48": "icons/icon-48.png",
@@ -22,7 +22,8 @@
       "48": "icons/icon-48.png",
       "96": "icons/icon-96.png"
     },
-    "default_title": "News Feed for GitHub"
+    "default_title": "News Feed for GitHub",
+    "browser_style": false
   },
   "permissions": [
     "https://*.github.com/*",

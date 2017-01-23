@@ -1,6 +1,6 @@
 /******************************************************
  * News Feed for GitHub
- * Copyright (c) 2016, Julian Motz
+ * Copyright (c) 2016–2017, Julian Motz
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed
  * with this source code.
@@ -24,7 +24,7 @@ if(typeof chrome === "object" && typeof chrome.browserAction === "object") {
             let opened = -1;
             let index = 0;
             for(let tab of tabs) {
-                if(tab.url.startsWith(instance.ghURL)) {
+                if(tab.url === instance.ghURL + "/") {
                     opened = tab.id;
                 } else if(tab.active) {
                     index = ++tab.index;
