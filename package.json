@@ -7,7 +7,6 @@
     "url": "https://github.com/julmot"
   },
   "license": "GPL-3.0",
-  "private": true,
   "repository": "julmot/news-feed-for-github",
   "homepage": "https://github.com/julmot/news-feed-for-github",
   "keywords": [
@@ -28,8 +27,13 @@
     "grunt-contrib-clean": "~1",
     "grunt-contrib-compress": "~1",
     "grunt-contrib-copy": "~1",
+    "grunt-eslint": "^20.0.0",
     "grunt-remove-logging": "^0.2.0",
     "grunt-text-replace": "~0.4",
-    "matchdep": "~1"
-  }
+    "matchdep": "~2"
+  },
+  "scripts": {
+    "test": "echo \"Error: Use Grunt tasks\" && exit 1"
+  },
+  "private": true
 }
