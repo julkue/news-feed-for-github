@@ -15,9 +15,6 @@
     },
     "sourceType": "module"
   },
-  "globals": {
-    "Drupal": true
-  },
   "rules": {
     "no-template-curly-in-string": "error",
     "array-callback-return": "error",
