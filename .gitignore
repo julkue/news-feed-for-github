@@ -1,8 +1,8 @@
 .settings
 node_modules
-extension/vendor
 build
+dist
+extension/vendor
 extension/test.html
 .project
 TODO
-dist

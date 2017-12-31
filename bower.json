@@ -1,10 +1,10 @@
 {
   "name": "news-feed-for-github",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "GitHub news feed notifications directly in the browser",
   "authors": [
     {
-      "name": "Julian Motz",
+      "name": "Julian Kühnel",
       "homepage": "http://github.com/julmot"
     }
   ],

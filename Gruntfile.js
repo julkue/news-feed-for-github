@@ -1,6 +1,6 @@
 /******************************************************
  * Github news feed
- * Copyright (c) 2016–2017, Julian Motz
+ * Copyright (c) 2016–2018, Julian Kühnel
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed
  * with this source code.
