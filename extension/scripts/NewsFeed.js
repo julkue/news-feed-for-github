@@ -66,7 +66,7 @@ class NewsFeed { // eslint-disable-line no-unused-vars
         try {
           let tmp = document.createElement('div');
           tmp.innerHTML = unescape(data);
-          rss = tmp.querySelector('a.link-gray-dark');
+          rss = tmp.querySelector('a[href*="private.atom?token="]');
           rss = rss.getAttribute('href');
           if (rss === null || rss === '') {
             throw new Error('err');

@@ -7,6 +7,7 @@
  * with this source code.
  *****************************************************/
 'use strict';
+
 class NewsFeedChecker extends NewsFeed { // eslint-disable-line no-unused-vars
 
   constructor() {

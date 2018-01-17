@@ -103,7 +103,7 @@ module.exports = grunt => {
             to: ''
           },
           {
-            from: /([A-Za-z]*\s?environment\s?=\s?")[A-Za-z0-9]*(";)/gmi,
+            from: /([A-Za-z]*\s?environment\s?=\s?["'])[A-Za-z0-9]*(["'];)/gmi,
             to: '$1chrome$2'
           }
         ]
@@ -120,7 +120,7 @@ module.exports = grunt => {
             to: ''
           },
           {
-            from: /([A-Za-z]*\s?environment\s?=\s?")[A-Za-z0-9]*(";)/gmi,
+            from: /([A-Za-z]*\s?environment\s?=\s?["'])[A-Za-z0-9]*(["'];)/gmi,
             to: '$1firefox$2'
           }
         ]
